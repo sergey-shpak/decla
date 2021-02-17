@@ -5,7 +5,8 @@ Everything you like and ever wanted - writing fast, superlight, functional and s
 
 ***
 
-Briefly before we begin, Decla components are pure functions, they don't create any side effects, instead they return declarative structures to describe side effects. So for example, instead of returning explicit vdom, they return declarations of dom effects to be taken. This allows handling any kind of side effect in appropriate way, making components design simple and predictable. Read more: [Decla.js introducing virtual effects](), [Decla concepts](docs/concepts.md)
+Briefly before we begin, Decla components are pure functions, they don't create any side effects, instead they return declarative structures to describe side effects. So for example, instead of returning explicit vdom, they return declarations of dom effects to be taken. This allows handling any kind of side effect in appropriate way, making components design simple and predictable. 
+Read more: [Decla.js introducing virtual effects](), [Decla concepts](docs/concepts.md)
 
 One more thing to mention, Decla framework makes your frontend development fast and easy, 
 so please hit the like button and share with friends to give it more juice!
@@ -38,7 +39,7 @@ function Hello({ domEffect }){
 </p>
 </details>
 
-[Try it on CodePen](). It is recommended to use dom effects decorators like `useTags()` to make your code more readable and elegant. Read more: [Using hyperscript and jsx](docs/hyperscript-jsx.md)
+[Try it on CodePen](https://codepen.io/sergey-shpak/pen/QWGvPwx). It is recommended to use dom effects decorators like `useTags()` to make your code more readable and elegant. Read more: [Using hyperscript and jsx](docs/hyperscript-jsx.md)
 
 ### Stateless Component and App
 
@@ -67,7 +68,7 @@ const Counter = ({ useState, useTags }) => {
 
 app(Counter, 0, dom(document.body))
 ```
-[Try it on CodePen](). Decla takes care about cancelling and (re)starting effects depending on returned structure, this gives freedom and more advanced control over effects. Read more: [Writing custom effects](docs/custom-effects.md)
+[Try it on CodePen](https://codepen.io/sergey-shpak/pen/wvodZVN). Decla takes care about cancelling and (re)starting effects depending on returned structure, this gives freedom and more advanced control over effects. Read more: [Writing custom effects](docs/custom-effects.md)
 
 
 ### Components composition and App
@@ -108,7 +109,7 @@ const CatApp = ({ useState, useTags }) => {
 
 app(CatApp, 0, dom(document.body))
 ```
-[Try it on CodePen](). Decla differentiates components from effects by names, effect's name should always end with 'Effect' (this means effects cannot be declared as arrow functions), read more: [Decla API and structures](docs/effects/decla-api-and-structures.md)
+[Try it on CodePen](https://codepen.io/sergey-shpak/pen/BaQREjJ). Decla differentiates components from effects by names, effect's name should always end with 'Effect' (this means effects cannot be declared as arrow functions), read more: [Decla API and structures](docs/effects/decla-api-and-structures.md)
 
 
 ### Congratulations! 
