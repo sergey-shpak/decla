@@ -1,0 +1,24 @@
+{
+  "name": "decla",
+  "main": "index.js",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Decla - declarative apps framework",
+  "files": [
+    "index.js",
+    "packages/effects/dom.js"
+  ],
+  "scripts": {},
+  "author": "Sergey Shpak",
+  "license": "MIT",
+  "repository": "sergey-shpak/decla",
+  "keywords": [
+    "decla",
+    "framework",
+    "frontend",
+    "web",
+    "app",
+    "spa",
+    "2021"
+  ]
+}
