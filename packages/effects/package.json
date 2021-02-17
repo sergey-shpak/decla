@@ -1,0 +1,16 @@
+{
+    "name": "@decla/effects",
+    "main": "index.js",
+    "type": "module",
+    "version": "0.0.0",
+    "description": "Decla common effects",
+    "scripts": {},
+    "author": "Sergey Shpak",
+    "license": "MIT",
+    "repository": "sergey-shpak/decla",
+    "keywords": [
+      "decla",
+      "framework",
+      "effects"
+    ]
+  }

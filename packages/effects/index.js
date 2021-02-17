@@ -1,0 +1,1 @@
+export { IntervalEffect } from './time.js'
