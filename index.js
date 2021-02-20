@@ -23,25 +23,23 @@ export const compile = (nodes, getOptions) =>
 
 // TODO: More efficient effects mapping algorithm?
 export const patch = (prevTree, nextTree, context) => {
-  prevTree.filter((prev, idx) => 
-    prev && (!nextTree[idx] || prev[0] !== nextTree[idx][0])
-  ).forEach((prev, idx) => 
-    prev[0](prev, null, idx, ctx => patch(prev[2], [], ctx), context)
-  )
+  prevTree = prevTree.map((prev, idx) => {
+    const next = nextTree[idx]
+    return prev && (!next || prev[0] !== next[0])
+    ? prev[3](context)
+    : prev
+  })
 
   return nextTree.map((next, idx) => {
-    const prev = prevTree[idx] || [,,[]]
-    return next 
-    ? next[0](
-        prev[0] === next[0]
-        ? prev
-        : null,
-        next,
-        idx,
-        (ctx) => next[2] = patch(prev[2], next[2], ctx),
-        context
-      )
-    : next
+    const prev = prevTree[idx]
+    if(next){
+      const cancel = next[0](prev, next,
+        (...args) => next[2] = patch(...args), context)
+      next.push((ctx) => {
+        patch(next[2], [], cancel(ctx))
+      })
+    }
+    return next
   })
 }
 

@@ -38,31 +38,28 @@ const createDomNode = (tag, attrs) => updateDomNode(
   attrs
 ) 
 
-export const dom = (root) => {
-  const domEffect = (prev, next, index, propagate, parent = root) => {
-    const [, nextProps] = next || []
-    const [, prevProps] = prev || []
+export const dom = (parent) => {
+  const domEffect = (prev, next, propagate, context = { parent, idx: 0 }) => {
+    let el
 
-    if(!prev){
-      next[3] = parent.insertBefore(
-        createDomNode(nextProps.tagName, nextProps.attrs), 
-        parent.childNodes[index]
-      )
-    } else if(!next){
-      parent && parent.removeChild(prev[3])
-    } else if(prevProps.tagName !== nextProps.tagName){      
-      next[3] = createDomNode(nextProps.tagName, nextProps.attrs)  
-
-      prev[3].childNodes.forEach(node => 
-        next[3].appendChild(node))
-
-      parent.replaceChild(next[3], prev[3])
+    if(prev && prev[1].tagName === next[1].tagName){
+      el = context.parent.childNodes[context.idx]
+      context.idx++
+      updateDomNode(el, prev[1].attrs, next[1].attrs)
+      propagate(prev[2], next[2], { parent: el, idx: 0 })
     } else {
-      updateDomNode(next[3] = prev[3], prevProps.attrs, nextProps.attrs)
+      if(prev) prev[3](context)
+      el = context.parent.insertBefore(
+        createDomNode(next[1].tagName, next[1].attrs), 
+        context.parent.childNodes[context.idx]
+      )
+      context.idx++
+      propagate([], next[2], { parent: el, idx: 0 })
     }
 
-    propagate(next ? next[3] : null)
-    return next
+    return (context) => {
+      context && context.parent.removeChild(el)      
+    }
   }
 
   const useTags = () => new Proxy({}, {
