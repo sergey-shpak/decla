@@ -83,9 +83,9 @@ export const dom = (parent) => {
       ? { tagName: name, attrs: attrs || {} }
       : attrs || {},
       child.map(item => 
-        typeof item === 'string'
+        typeof item === 'string' || typeof item === 'number'
         ? h(DomEffect, { tagName: 'text', attrs: { value: item } })
-        : item      
+        : item
       )
     ] : [attrs, ...child]
   )
