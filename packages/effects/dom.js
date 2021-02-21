@@ -39,7 +39,8 @@ const createDomNode = (tag, attrs) => updateDomNode(
 ) 
 
 export const dom = (parent) => {
-  const domEffect = (prev, next, propagate, context = { parent, idx: 0 }) => {
+
+  const DomEffect = (prev, next, propagate, context = { parent, idx: 0 }) => {
     let el
 
     if(prev && prev[1].tagName === next[1].tagName){
@@ -65,13 +66,29 @@ export const dom = (parent) => {
   const useTags = () => new Proxy({}, {
     get: (target, tagName) => 
       (attrs = {}, child = []) =>
-        [domEffect, { 
+        [DomEffect, { 
           tagName, 
           attrs: tagName === 'text'
           ? { value: attrs }
           : attrs
         }, child]
     })
+    
+  const h = (name, attrs, ...child) => (
+    typeof name !== 'object' ? [
+      typeof name === 'string'
+      ? DomEffect
+      : name,
+      typeof name === 'string'
+      ? { tagName: name, attrs: attrs || {} }
+      : attrs || {},
+      child.map(item => 
+        typeof item === 'string'
+        ? h(DomEffect, { tagName: 'text', attrs: { value: item } })
+        : item      
+      )
+    ] : [attrs, ...child]
+  )
 
-  return { domEffect, useTags }
+  return { DomEffect, useTags, h }
 }

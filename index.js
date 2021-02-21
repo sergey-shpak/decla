@@ -1,8 +1,5 @@
 export { dom } from './packages/effects/dom.js'
 
-export const h = (name, props = {}, child = []) => 
-  [name, props, child] // hyperscript
-
 export const compile = (nodes, getOptions) => 
   nodes.reduce((acc, node) => {
     if(Array.isArray(node) 
@@ -45,9 +42,7 @@ export const patch = (prevTree, nextTree, context) => {
 
 export const app = (src, state, ...helpers) => {
   const options = helpers.reduce((prev, helper) => 
-    Object.assign(Object.create(prev), helper), 
-    { h }
-  )
+    Object.assign(prev, helper), {})
 
   return (function render(src, tree){   
     tree = patch(tree, compile(src, (props) => 
