@@ -7,8 +7,8 @@ const eventHandler = function (event) {
 
 const updateDomNode = (node, oldAttrs, newAttrs) => 
   node.nodeType === Node.TEXT_NODE
-  ? oldAttrs.value !== newAttrs.value 
-  ? (node.nodeValue = newAttrs.value, node)
+  ? oldAttrs !== newAttrs 
+  ? (node.nodeValue = newAttrs, node)
   : node
   : Object.keys({ ...oldAttrs, ...newAttrs})
     .filter(attr => oldAttrs[attr] !== newAttrs[attr])
@@ -33,7 +33,7 @@ const updateDomNode = (node, oldAttrs, newAttrs) =>
 const createDomNode = (tag, attrs) => updateDomNode(
   tag !== 'text'
   ? document.createElement(tag, { is: attrs.is })
-  : document.createTextNode(attrs.value),
+  : document.createTextNode(attrs),
   {}, 
   attrs
 ) 
@@ -62,17 +62,6 @@ export const dom = (parent) => {
       context && context.parent.removeChild(el)      
     }
   }
-
-  const useTags = () => new Proxy({}, {
-    get: (target, tagName) => 
-      (attrs = {}, child = []) =>
-        [DomEffect, { 
-          tagName, 
-          attrs: tagName === 'text'
-          ? { value: attrs }
-          : attrs
-        }, child]
-    })
     
   const h = (name, attrs, ...child) => (
     typeof name !== 'object' ? [
@@ -84,11 +73,11 @@ export const dom = (parent) => {
       : attrs || {},
       child.map(item => 
         typeof item === 'string' || typeof item === 'number'
-        ? h(DomEffect, { tagName: 'text', attrs: { value: item } })
+        ? h(DomEffect, { tagName: 'text', attrs: item })
         : item
       )
     ] : [attrs, ...child]
   )
 
-  return { DomEffect, useTags, h }
+  return { DomEffect, h }
 }
