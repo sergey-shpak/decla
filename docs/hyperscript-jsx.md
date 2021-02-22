@@ -10,7 +10,9 @@ h(name[, props[, child, ..., childN]]){
   /* return declarative structure */ 
 }
 ```
-where **name** is either string('tag' name of DomEffect) or any other Decla Component/Effect, **props** Component/Effect props object or string (used with `text` tag), **child** child structure passed into Component or Effect. 
+- **name** is either string('tag' name of DomEffect) or any other Decla Component/Effect
+- **props** Component/Effect props object or string (used with `text` tag)
+- **child** child structure passed into Component or Effect
 
 Example of Decla hyperscript usage:
 ```js
@@ -56,7 +58,7 @@ Since Decla provides jsx compatible hyperscript function by default, using jsx w
   }]
 }
 ```
-*pragmaFrag - in case you want to use jsx 'Fragments'
+*pragmaFrag* - in case you want to use jsx 'Fragments'
 
 Now jsx syntax compiled into hyperscript function calls and to make it properly work hyperscript function `h` should be provided into each jsx component: 
 ```jsx
@@ -91,7 +93,7 @@ app(App, 0, dom(document.body))
 
 
 ### Relative topics
-[Declarative structures](), 
-[Decla API]()
-[Decla Components](),
-[Decla examples]()
+- [Declarative structures](), 
+- [Decla API](),
+- [Decla Components](),
+- [Decla examples]()
