@@ -44,19 +44,21 @@ export const app = (src, state, ...helpers) => {
   const options = helpers.reduce((prev, helper) => 
     Object.assign(prev, helper), {})
 
-  return (function render(src, tree){   
+  let tree = []
+  src = [[src]]
+
+  return (function render(){
     tree = patch(tree, compile(src, (props) => 
       Object.assign(Object.create(options), { 
         useState: (getter, setter) => [
-          getter(state), (value) => {
-            state = setter(state, value)
-            render(src, tree)
-          }
+          getter(state), (value) => 
+            render(state = setter(state, value))
         ],
         useProps: () => props
       })
     ))
-
-    return src => render([[src]], tree)
-  })([[src]], [])
+    
+    return end => 
+      render(src = [[end]])
+  })()
 }
