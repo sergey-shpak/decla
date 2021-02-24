@@ -5,7 +5,10 @@ export const compile = (nodes, getOptions) =>
     if(Array.isArray(node) 
       && typeof node[0] === 'function' 
         && !node[0].name.endsWith('Effect'))
-          node = node[0](getOptions(node[1]), node[2])
+          node = compile(
+            [ node[0](getOptions(node[1]), node[2]) ], 
+            getOptions
+          )
 
     return acc.concat(
       Array.isArray(node)
